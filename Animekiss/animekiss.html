@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>animekiss</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@100..900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="/" id="navbar__logo">animekiss</a>
+      <div class="navbar__toggle" id="mobile-menu">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+           <!-- Search Button -->
+    <a id="searchBtn" class="navbar__links">Search</a>
+ 
+     <!-- Modal Dialog Box -->
+<div id="searchModal" class="modal">
+  <div class="modal-content">
+      <span id="closeBtn" class="close">&times;</span>
+      <p>Search for Your Favourite Anime</p>
+      <input type="text" id="searchInput" placeholder="Enter Anime name">
+      <button id="searchSubmit">Search</button>
+  </div>
+</div>
+
+        </li>
+        <li class="navbar__item">
+          <a href="#series" class="navbar__links">Popular</a>
+        </li>
+        <li class="navbar__item">
+           <!-- Genre Button -->
+  <!-- <button id="genre-btn">Genres</button> -->          
+  <a href="/" id="genre-btn" class="navbar__links">Genre</a>
+  
+  <!-- Genre List (Initially hidden) -->
+  <div id="genre-list" class="genre-list">
+    <!-- Don`t really know -->
+  </div>
+      </li>
+     <li> 
+  <!-- Recommendations Section -->
+  <div id="recommendat,ions">
+    <a class="navbar__links">Recommended Anime</a>
+    <ul id="anime-list">
+      <!-- Anime recommendations will appear here -->
+    </ul>
+  </div>
+    </li>
+        <li class="navbar__btn">
+          <a href="/" class="button">Watch!</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!--Anime Section-->
+  <div class="main" >
+    <div class="main_container">
+      <div class="main_content">
+        <h1>Everything you need!</h1>
+        <h2>アニメ</h2>
+        <p>Unleash Your Next Obsession: Discover Anime Beyond the Ordinary!</p>
+        <!-- Quiz Container -->
+<div id="quizContainer" style="display: none;">
+  <h2>Anime Quiz: Find Your Perfect Series</h2>
+  <p id="question"></p>
+  <div id="answerChoices">
+      <!-- Answer choices will be dynamically added here -->
+  </div>
+  <button id="nextButton" onclick="nextQuestion()">Next</button>
+</div>
+<button class="main__btn"><a id="startQuizButton" href="javascript:void(0);">Anime Quiz</a></button>
+
+    </div>
+  </div>
+
+<!--Latest anime section-->
+<div id="series" class="services">
+  <h1>Latest anime series</h1>
+  <div class="services__container">
+    <div class="services__card">
+      <p>Shonen, Gore, Action</p>
+      <button class="anime-button" id="chainsawman" data-anime="chainsawman">Chainsaw Man</button>
+    </div>
+    <div class="services__card">
+      <p>Fantasy, Super-natural</p>
+      <button class="anime-button" id="seven_deadly_sins" data-anime="seven deadly sins">The Seven Deadly Sins</button>
+    </div>
+    <div class="services__card">
+      <p>Fantasy, Super-natural</p>
+      <button class="anime-button" id="wind_breaker" data-anime="wind breaker">Wind Breaker</button>
+    </div>
+    <div class="services__card">
+      <p>Slice-of-life, Comedy</p>
+      <button class="anime-button" id="spy_family" data-anime="spy family">Spy x Family</button>
+    </div>
+    <div class="services__card">
+      <p>See for yourself</p>
+      <button class="anime-button" id="attack_on_titan" data-anime="attack on titan">Attack on Titan</button>
+    </div>
+    <div class="services__card">
+      <p>Super-natural</p>
+      <button class="anime-button" id="black_clover" data-anime="black clover">Black Clover</button>
+    </div>
+
+<!-- Dialog Box to Show Anime Description -->
+<dialog class="anime-description" id="description">
+  <h1>Select/Search an anime to see its description</h1>
+  <p id="anime-desc">To Show Description</p>
+</dialog>
+    </div>
+  </div>
+</div>
+  <script src="app.js"></script>
+</body>
+</html>
