@@ -47,25 +47,41 @@ const animeDesc = document.getElementById('anime-desc');
 animeButtons.forEach(button => {
     button.addEventListener('click', function() {
         const animeKey = this.dataset.anime; // Get the anime name from data-anime attribute
-        fetchAnimeData(animeKey); // Fetch data from Jikan API
+        fetchAnimeData(animeKey); // Fetch data from AniList API
         descriptionDialog.showModal(); // Open the description dialog
     });
 });
 
-// Function to fetch data from Jikan API
+// Function to fetch data from AniList API (the Jikan public API was discontinued on 1 Oct 2026)
 async function fetchAnimeData(query) {
     try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&limit=1`);
+        const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                query: `query ($search: String) {
+                    Media(search: $search, type: ANIME, isAdult: false) {
+                        title { english native }
+                        description
+                        genres
+                        seasonYear
+                        startDate { year }
+                        coverImage { large }
+                    }
+                }`,
+                variables: { search: query }
+            })
+        });
         const data = await response.json();
 
-        if (data.data && data.data.length > 0) {
-            const anime = data.data[0];  // Get the first result from the search
-            const description = anime.synopsis;
-            const genre = anime.genres.map(g => g.name).join(', ');
-            const japaneseTitle = anime.title_japanese;
-            const englishTitle = anime.title_english || 'N/A';  // Default to 'N/A' if no English title is available
-            const imageUrl = anime.images.jpg.image_url;
-            const startYear = anime.year || 'N/A';  // Default to 'N/A' if no year is available
+        if (data.data && data.data.Media) {
+            const anime = data.data.Media;  // AniList returns the best match for the search
+            const description = anime.description;
+            const genre = anime.genres.join(', ');
+            const japaneseTitle = anime.title.native;
+            const englishTitle = anime.title.english || 'N/A';  // Default to 'N/A' if no English title is available
+            const imageUrl = anime.coverImage.large;
+            const startYear = anime.seasonYear || anime.startDate.year || 'N/A';  // Default to 'N/A' if no year is available
 
             // Display the fetched data in the anime description inside the dialog
             animeDesc.innerHTML = `
@@ -89,7 +105,7 @@ async function fetchAnimeData(query) {
 searchSubmit.addEventListener('click', () => {
     const query = searchInput.value.trim();
     if (query) {
-        fetchAnimeData(query);  // Fetch data from Jikan API
+        fetchAnimeData(query);  // Fetch data from AniList API
         searchModal.style.display = "none"; // Close the modal after search
         descriptionDialog.showModal(); // Open the description dialog
     } else {
@@ -138,20 +154,36 @@ animeButtons.forEach(button => {
     });
 });
 
-// Function to fetch data from Jikan API
+// Function to fetch data from AniList API (the Jikan public API was discontinued on 1 Oct 2026)
 async function fetchAnimeData(query) {
     try {
-        const response = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&limit=1`);
+        const response = await fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+            body: JSON.stringify({
+                query: `query ($search: String) {
+                    Media(search: $search, type: ANIME, isAdult: false) {
+                        title { english native }
+                        description
+                        genres
+                        seasonYear
+                        startDate { year }
+                        coverImage { large }
+                    }
+                }`,
+                variables: { search: query }
+            })
+        });
         const data = await response.json();
 
-        if (data.data && data.data.length > 0) {
-            const anime = data.data[0];  // Get the first result from the search
-            const description = anime.synopsis;
-            const genre = anime.genres.map(g => g.name).join(', ');
-            const japaneseTitle = anime.title_japanese;
-            const englishTitle = anime.title_english || 'N/A';  // Default to 'N/A' if no English title is available
-            const imageUrl = anime.images.jpg.image_url;
-            const startYear = anime.year || 'N/A';  // Default to 'N/A' if no year is available
+        if (data.data && data.data.Media) {
+            const anime = data.data.Media;  // AniList returns the best match for the search
+            const description = anime.description;
+            const genre = anime.genres.join(', ');
+            const japaneseTitle = anime.title.native;
+            const englishTitle = anime.title.english || 'N/A';  // Default to 'N/A' if no English title is available
+            const imageUrl = anime.coverImage.large;
+            const startYear = anime.seasonYear || anime.startDate.year || 'N/A';  // Default to 'N/A' if no year is available
 
             // Display the fetched data in the anime description inside the dialog
             animeDesc.innerHTML = `
@@ -175,7 +207,7 @@ async function fetchAnimeData(query) {
 searchSubmit.addEventListener('click', () => {
     const query = searchInput.value.trim();
     if (query) {
-        fetchAnimeData(query);  // Fetch data from Jikan API
+        fetchAnimeData(query);  // Fetch data from AniList API
         searchModal.style.display = "none"; // Close the modal after search
         descriptionDialog.showModal(); // Open the description dialog
     } else {
